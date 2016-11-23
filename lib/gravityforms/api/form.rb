@@ -27,6 +27,13 @@ module Gravityforms
         forms["response"].map { |attributes| new(attributes[1]) }
       end
 
+      def self.entries(id)
+        request = Gravityforms::Api::Request.new("forms/#{id}/entries", "GET")
+        response = request.get
+        attributes = JSON.parse(response.body)
+        new(attributes)
+      end
+
       def self.submit(id, payload)
         request = Gravityforms::Api::Request.new("forms/#{id}/submissions", "POST")
         response = request.post(payload)
